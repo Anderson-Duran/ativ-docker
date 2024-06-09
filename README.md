@@ -39,3 +39,9 @@ docker run -p 3000:3000 --network db-network --name api -d mikeduran/api:0.0.1
 ### 6. Acessar a API
 
 Abra seu navegador e acesse a URL http://localhost:3000 para verificar se a API está funcionando e realizar consultas.
+
+
+
+### Link Docker HUb 
+
+https://hub.docker.com/repository/docker/mikeduran/api/general
