@@ -6,7 +6,7 @@ Crie uma rede Docker para permitir a comunicação entre o banco de dados e a AP
 docker network create db-network
 
 ## 2. Executar o Banco de Dados
-docker run -d --name server --network db-network -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=db_aula -v db_data:/var/lib/mysql -v "${PWD}/init.sql:/docker-entrypoint-initdb.d/init.sql" -p 3306:3306 mysql:latest
+docker run -d --name server --network db-network -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=db_aula -v db_data:/var/lib/mysql -v "${PWD}/init.sql:/docker-entrypoint-initdb.d/init.sql" -p 3306:3306 mysql:8.0.4
 
 ## 3. Criar Docker para a API
 docker build -t mikeduran/api:0.0.1 .
