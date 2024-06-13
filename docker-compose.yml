@@ -1,29 +1,41 @@
-version: '3.9'
-
 services:
   db:
-    image: mysql:8.4.0
+    image: mysql:8.0.4
+    container_name: server
+    restart: always
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       MYSQL_DATABASE: db_aula
       MYSQL_ROOT_PASSWORD: ''
     ports:
-      - '3307:3306'
+      - '3306:3306'
     volumes:
-      - db_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - db-network
 
   app:
-   build: .
-   ports:
-     - '3000:3000'
-   environment:
-     DB_HOST: db
-     DB_USER: root
-     DB_PASSWORD: ''
-     DB_NAME: db_aula
-   depends_on:
-     - db
+    build: .
+    container_name: api
+    ports:
+      - '3000:3000'
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: ''
+      DB_NAME: db_aula
+      DB_PORT: 3306
+    depends_on:
+      - db
+    networks:
+      - db-network
+    links:
+      - db
 
 volumes:
   db_data:
+
+
+networks:
+  db-network:
+    driver: bridge

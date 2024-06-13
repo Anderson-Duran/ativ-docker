@@ -3,13 +3,14 @@ const mysql = require('mysql2');
 const app = express();
 
 const dbConfig = {
-    host: process.env.DB_HOST || 'server',
+    host: process.env.DB_HOST || 'db',
     user: process.env.DB_USER || 'root',
+    port: process.env.DB_PORT || 3306,
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'db_aula'
 };
 
-const connection =  mysql.createConnection(dbConfig);
+const connection = mysql.createConnection(dbConfig);
 
 connection.connect(error => {
     if (error) {
@@ -21,31 +22,31 @@ connection.connect(error => {
 
 app.get('/', (request, response) => {
     return response
-    .status(200)
-    .json({
-        status: true,
-        message: "Home da API"
-    });
+        .status(200)
+        .json({
+            status: true,
+            message: "Home da API"
+        });
 });
 
 app.get("/liveness", (request, response) => {
     return response
-    .status(200)
-    .json({
-        message: "API SuccessFull loaded",
-        path: process.cwd(), 
-        date: new Date().getTime()
-    });
+        .status(200)
+        .json({
+            message: "API SuccessFull loaded",
+            path: process.cwd(), 
+            date: new Date().getTime()
+        });
 });
 
 app.get("/readiness", (request, response) => {
     return response
-    .status(200)
-    .json({
-        message: "API it's ready",
-        path: process.cwd(), 
-        date: new Date().getTime()
-    });
+        .status(200)
+        .json({
+            message: "API it's ready",
+            path: process.cwd(), 
+            date: new Date().getTime()
+        });
 });
 
 app.get('/consulta-dados', (request, response) => {
@@ -55,10 +56,10 @@ app.get('/consulta-dados', (request, response) => {
         if (error) {
             console.error('Error executing the query:', error);
             return response
-            .status(500)
-            .json({
-                error: 'Error fetching data from database'
-            });
+                .status(500)
+                .json({
+                    error: 'Error fetching data from database'
+                });
         }
 
         return response.status(200).json({
